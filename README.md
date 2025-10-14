@@ -1,4 +1,4 @@
-# 📈 Global Sales Dashboard
+# 📈 Global Sales 
 
 Visualize Global Sales. Drive Strategic Growth.  
 🚀 An interactive Power BI solution for turning raw sales data into actionable business intelligence.
