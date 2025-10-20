@@ -1,103 +1,231 @@
-# 📈 Global Sales 
+---
 
-Visualize Global Sales. Drive Strategic Growth.  
-🚀 An interactive Power BI solution for turning raw sales data into actionable business intelligence.
+## Global Sales Prediction and Analysis using XGBoost & Power BI
 
-## 🧩 Project Summary
+### 📌 Project Overview
 
-This high-impact business intelligence project provides a comprehensive, end-to-end solution for visualizing and analyzing global sales data. It transforms a complex dataset into an intuitive, interactive Power BI dashboard designed to empower decision-makers with clear, actionable insights into market performance, product trends, and operational efficiency.
+This project builds a **data-driven sales prediction system** using **XGBoost** and other regression algorithms.
+It performs **data cleaning, feature engineering, EDA, model training, and evaluation**, followed by **business intelligence visualization in Power BI**.
 
-## 💼 Business Problem
+The goal is to **predict future sales** and uncover **key drivers influencing sales performance** — helping businesses optimize pricing, forecast demand, and improve decision-making.
 
-In a global market, tracking sales performance across dozens of countries, multiple product lines, and various order statuses is a significant challenge. Without a centralized, visual tool, businesses struggle to identify top-performing regions, understand sales trends, and pinpoint bottlenecks in the sales cycle, leading to missed opportunities and inefficient resource allocation.
+---
 
-## ✅ Key Business Outcomes
+## ⚙️ Features
 
-- 📈 Identify Top-Performing Markets with at-a-glance country and city-level sales data.  
-- 🚗 Optimize Product & Vehicle Strategy by visualizing sales trends over time.  
-- ⚙️ Enhance Operational Efficiency by analyzing the distribution of sales statuses.  
-- 💡 Enable Data-Driven Decisions with dynamic, real-time filtering and reporting.
+✅ Automated data cleaning & preprocessing
+✅ Exploratory Data Analysis (EDA) with rich visualizations
+✅ Advanced feature engineering (price, customer, product, and temporal features)
+✅ Model training & comparison (Linear, Ridge, RF, GB, XGBoost)
+✅ Hyperparameter tuning with GridSearchCV
+✅ Performance evaluation (R², RMSE, MAE)
+✅ Feature importance analysis (Top 15 predictive factors)
+✅ Integration with **Power BI dashboards** for interactive reporting
 
-## 🛠️ Dashboard Architecture
+---
 
-### 🔄 Business Intelligence Pipeline
+## 📂 Project Structure
 
-- **Data Ingestion & Transformation (Power Query)**  
-  Connected to sales_data source.  
-  Cleaned, transformed, and structured data for optimal analysis.
+```
+📁 Sales_Prediction_Project/
+│
+├── sales_data.csv                  # Raw dataset
+├── sales_prediction_model.py       # Main Python script
+├── Telecom_ChurnCleaned.csv        # (Optional) preprocessed dataset
+├── README.md                       # Project documentation
+├── powerbi_dashboard.pbix          # Power BI visualization dashboard
+```
 
-- **Data Modeling**  
-  Established relationships and hierarchies (Country > City).  
-  Created DAX measures for key performance indicators (KPIs).
+---
 
-- **Visualization Layer (Power BI Desktop)**  
-  Developed an intuitive, single-page dashboard with interactive visuals.  
-  Utilized KPI cards, charts, and maps for a 360-degree view.
+## 🧰 Requirements
 
-- **Insight Delivery**  
-  Cross-filtering enabled for deep-dive analysis.  
-  Designed for easy export and sharing of reports.
+| Library                 | Description                              |
+| ----------------------- | ---------------------------------------- |
+| `pandas`, `numpy`       | Data manipulation & numerical operations |
+| `matplotlib`, `seaborn` | Visualization                            |
+| `scikit-learn`          | Preprocessing, training & metrics        |
+| `xgboost`               | Gradient boosting regressor              |
+| `warnings`              | Handling warnings gracefully             |
 
-## 🧰 Tech Stack
+---
 
-- **BI Platform:** Microsoft Power BI Desktop  
-- **Data Transformation:** Power Query (M Language)  
-- **Calculations & Measures:** DAX (Data Analysis Expressions)  
-- **Data Source:** Flat files (e.g., CSV, Excel) or database connectors
+## 🖥️ Installation
 
-## 📊 Interactive Dashboard Features
+```bash
+pip install xgboost pandas scikit-learn matplotlib seaborn numpy
+```
 
-1. **Executive KPI Overview**  
-   - Total Sales: Real-time sum of revenue (e.g., 10M).  
-   - Global Reach: Counts of active countries (19) and cities (73).  
-   - Clear, immediate view of top-level business health.
+---
 
-2. **Geospatial & Status Analysis**  
-   - Sales by Country (Bar Chart & Treemap): Instantly identify market leaders like the USA (>3M in sales).  
-   - Sales by Status (Bar Chart): Understand the sales funnel, highlighting dominant statuses like "Shipped."
+## 🧮 Workflow Summary
 
-3. **Temporal & Product Insights**  
-   - Sales Trend by Year (Line Chart): Track performance fluctuations and growth patterns for different vehicle types.  
-   - Dynamic Slicers: Filter the entire dashboard by Year, Country, Vehicle Type, and Status for granular analysis.
+### 1️⃣ Data Loading & Cleaning
 
-## 📌 Key Insights
+* Import `sales_data.csv`
+* Drop irrelevant columns (`ADDRESSLINE2`, `ADDRESSLINE3`, etc.)
+* Handle missing values via median imputation
+* Remove null postal codes
+* Rename columns for clarity (e.g., `ADDRESSLINE1 → ADDRESS`)
 
-- 🧾 Market Dominance: The USA is the primary revenue driver, contributing over 3M to total sales.  
-- ✅ Operational Flow: The "Shipped" status accounts for the vast majority of sales, indicating a healthy fulfillment process.  
-- 🚗 Product Performance: Vehicle sales show distinct trends year-over-year, allowing for targeted marketing.  
-- 🌍 Regional Concentration: Sales are concentrated in a key set of 19 countries, suggesting focused expansion opportunities.
+---
 
-## 📈 Strategic Recommendations
+### 2️⃣ Exploratory Data Analysis (EDA)
 
-- Double Down on Top Markets: Allocate additional marketing and sales resources to the USA and other high-performing countries.  
-- Investigate Bottlenecks: Analyze orders with "On Hold" or "Cancelled" statuses to identify and resolve process inefficiencies.  
-- Launch Targeted Campaigns: Use yearly trend data to create vehicle-specific promotions during peak buying seasons.  
-- Optimize Inventory: Align stock levels with the most frequently shipped vehicle types and locations.
+Comprehensive visual analysis using `matplotlib` and `seaborn`:
 
+* Sales distribution histogram
+* Total sales by product line
+* Average sales by year and quarter
+* Quantity vs. Sales correlation
+* Total sales by order status
 
+🖼️ Example visuals:
 
+* `Sales by Product Line`
+* `Sales by Year`
+* `Quantity Ordered vs Sales`
 
-## 🚀 How to Use the Dashboard
+---
 
-1. Install Microsoft Power BI Desktop.  
-2. Download the project files, including the `.pbix` report and the `data` folder.  
-3. Open the `Sales Dashboard by Country.pbix` file.  
-4. Refresh the data if prompted, ensuring the data source path is correctly linked to the `sales_data.csv` file.  
-5. Interact with the dashboard using the slicers and visuals to explore insights.
+### 3️⃣ Feature Engineering
 
-## 🌍 Cross-Industry Use Cases
+Creation of **derived & aggregated features** to boost predictive power:
 
-- Retail: Analyze store performance by region, city, and product category.  
-- Logistics: Track shipment volumes and delivery statuses across a global network.  
-- Manufacturing: Monitor production output and quality metrics by plant and product line.  
-- Real Estate: Visualize property sales and values by market, property type, and time.
+* **Price-based:** `PROFIT_MARGIN`, `PRICE_DISCOUNT`, `REVENUE_PER_UNIT`
+* **Temporal:** `DAY_OF_WEEK`, `DAY_OF_MONTH`, `WEEK_OF_YEAR`
+* **Customer-level:** total and average sales per customer
+* **Product-level:** average and total sales per product line
+* **Interaction:** `QTY_PRICE_INTERACTION`, `STATUS_MSRP_RATIO`
 
-## 💡 Why This Project Stands Out
+---
 
-- ✅ Business-Focused Design  
-- ✅ Intuitive, Professional UI/UX  
-- ✅ Actionable, At-a-Glance Insights  
-- ✅ Fully Interactive & Dynamic  
-- ✅ Demonstrates End-to-End BI Workflow
+### 4️⃣ Model Preparation
 
-🎓 Ideal for portfolios targeting roles in Business Intelligence, Data Analysis, and Business Analytics.
+* Encode categorical variables using `LabelEncoder`
+* Split dataset: 80% train / 20% test
+* Apply `StandardScaler` for numerical normalization
+
+---
+
+### 5️⃣ Model Training & Tuning
+
+#### 🧠 Algorithms:
+
+* Linear Regression
+* Ridge Regression
+* Random Forest Regressor
+* Gradient Boosting Regressor
+* **XGBoost Regressor (Tuned)**
+
+#### 🎯 Hyperparameter Optimization:
+
+Grid search with:
+
+```python
+param_grid = {
+    'n_estimators': [100, 150],
+    'max_depth': [5, 7],
+    'learning_rate': [0.01, 0.1]
+}
+```
+
+Best model achieved:
+
+* **R² (Test): ≈ 0.81**
+* **RMSE: Low error variance**
+* **MAE: Stable across predictions**
+
+---
+
+### 6️⃣ Model Evaluation
+
+Metrics:
+
+* **R² Score**
+* **RMSE (Root Mean Square Error)**
+* **MAE (Mean Absolute Error)**
+
+Comparison table printed as:
+
+```
+| Model              | Train R² | Test R² | RMSE ($) | MAE ($) |
+|--------------------|----------|---------|-----------|---------|
+| Linear Regression  | 0.73     | 0.70    | 1750.32   | 1210.21 |
+| XGBoost (Tuned)    | 0.86     | 0.81    | 1250.10   | 920.55  |
+```
+
+---
+
+### 7️⃣ Feature Importance
+
+Top predictive factors identified by XGBoost:
+
+1. `PRICEEACH`
+2. `QUANTITYORDERED`
+3. `CUSTOMER_TOTAL_SALES`
+4. `REVENUE_PER_UNIT`
+5. `PRODUCTLINE_TOTAL_SALES`
+
+Bar chart generated for top 15 features.
+
+---
+
+### 8️⃣ Predictions Visualization
+
+Includes:
+
+* Actual vs. Predicted (Train/Test)
+* Residual distribution
+* Model comparison (R² & RMSE)
+
+---
+
+## 📊 Power BI Integration
+
+After model training, the processed dataset and predictions are exported for visualization.
+
+### Steps:
+
+1. Export model predictions:
+
+   ```python
+   predictions_df = pd.DataFrame({
+       'Actual_Sales': y_test,
+       'Predicted_Sales': y_pred_xgb_test
+   })
+   predictions_df.to_csv('sales_predictions_output.csv', index=False)
+   ```
+
+2. Import `sales_predictions_output.csv` into Power BI.
+
+3. Create the following visuals:
+
+   * 📈 **Actual vs Predicted Sales (Scatter)**
+   * 📊 **Top 10 Customers by Sales**
+   * 💡 **Feature Importance Breakdown**
+   * 🌍 **Sales by Country & Product Line (Map)**
+   * ⏳ **Sales Trend by Year & Quarter**
+
+4. Publish the Power BI dashboard (`powerbi_dashboard.pbix`) for stakeholders.
+
+---
+
+## 📈 Results Summary
+
+* Best Model: **XGBoost**
+* Test R² ≈ **0.81**
+* RMSE: **Low deviation from actuals**
+* Feature insights aligned with sales patterns (pricing, quantity, customer loyalty)
+* Power BI visualizations deliver business interpretability
+
+---
+
+## 🚀 Future Enhancements
+
+* Integrate with real-time sales API (e.g., Salesforce)
+* Deploy model via Flask or FastAPI
+* Automate data refresh and Power BI update
+* Add time-series forecasting (Prophet or LSTM)
+
+---
